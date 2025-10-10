@@ -66,7 +66,7 @@ srun --pty bash
 module load PDCOLD/23.12
 module load singularity/4.1.1-cpeGNU-23.12
 ```
-If you load singularity then you should run with (whathever this means) 
+If you load singularity, then you should run with (whatever this means) 
 ```bash
 singularity exec --rocm -B /cfs/klemming /pdc/software/resources/sing_hub/rocm5.7_ubuntu22.04_py3.10_pytorch_2.0.1 python3 main.py
 ```
