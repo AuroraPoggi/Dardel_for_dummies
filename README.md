@@ -66,6 +66,10 @@ srun --pty bash
 module load PDCOLD/23.12
 module load singularity/4.1.1-cpeGNU-23.12
 ```
+If you load singularity then you should run with (whathever this means) 
+```bash
+singularity exec --rocm -B /cfs/klemming /pdc/software/resources/sing_hub/rocm5.7_ubuntu22.04_py3.10_pytorch_2.0.1 python3 main.py
+```
 
 ### Environment Activation
 ```bash
@@ -77,6 +81,19 @@ conda activate myenv
 python main.py
 # or
 bash test.sh
+```
+
+### Checking a job status
+```bash
+# Check all your jobs in the queue
+squeue -u $USER
+
+# Show detailed information about a specific job
+scontrol show job <job_id>
+```
+### Cancel a running or pending job
+```bash
+scancel <job_id>
 ```
 
 ## Storage Management
