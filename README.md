@@ -16,42 +16,48 @@ cat ~/.ssh/id_rsa.pub
 1. Go to https://loginportal.pdc.kth.se
 2. Click on "add a new key"
 3. Insert SSH public key (from `cat ~/.ssh/id_rsa.pub`)
-4. Modify the key name and extend to all IP addresses
+4. Modify the key name with what you prefer and extend to all IP addresses
+
+### To access Dardel through terminal:
+```bash
+# Run 
+ssh usernamename@servername.se
+```
 
 ### VSCode SSH Configuration
 1. Click on `><` in bottom left corner
 2. Click on "Connect to Host"
-3. Click on "+" Add new SSH Host
-4. Modify config file:
+3. Click on "+" Add -new SSH Host...
+4. Modify config file, adding the following:
 ```
 Host nameplace
     HostName dardel.pdc.kth.se
-    IdentityFile ~/.ssh/sissa_id_ed25519 
+    IdentityFile ~/.ssh/keyname
     IdentitiesOnly yes
-    User aurorap
+    User username
 ```
 
-### Access with VPN (Mac VPN drops every 24 minutes)
+### Access with VPN
 ```bash
-ssh -i ~/.ssh/ed25519_vpn aurorap@dardel.pdc.kth.se
+ssh -i ~/.ssh/keyname username@servername.se
 ```
 
 ## Running Code on Dardel PDC
 
 ### Resource Allocation
 ```bash
-# Standard allocation (Kateryna's project 1707, Matthieu's 1600)
-salloc -A naiss2024-22-1707 -p main --nodes=1 --time=02:00:00
+# Standard allocation 
+salloc -A naiss2024-22-projectnumber -p main --nodes=1 --time=02:00:00
 
 # GPU allocation
-salloc -A naiss2024-22-1707 -p gpu --nodes=1 --gpus=1 --time=02:00:00
+salloc -A naiss2024-22-projectnumber -p gpu --nodes=1 --gpus=1 --time=02:00:00
 ```
 
 ### Starting Interactive Session
 ```bash
 # Once allocation is granted
 srun --pty bash
-# You should see: base aurorap@nodename
+# You should see: base username@nodename
 ```
 
 ### GPU Setup (if needed)
@@ -66,7 +72,7 @@ module load singularity/4.1.1-cpeGNU-23.12
 conda activate myenv
 ```
 
-### Running Scripts
+### Running Scripts in python or bash, as usual
 ```bash
 python main.py
 # or
@@ -87,7 +93,7 @@ du -h --max-depth=1 | sort -hr
 ls -lh
 ```
 
-## Background Processing
+## Run in Background 
 
 ### Basic Bash Script Template
 ```bash
@@ -115,44 +121,40 @@ done
 ```
 
 ## File Transfer
-
+Using the right node to move big files (dardel-ftn01.pdc.kth.se). 
 ### Server to Local
 ```bash
 # Move folders
-scp -r aurorap@dardel-ftn01.pdc.kth.se:/cfs/klemming/home/a/aurorap/folderpath /Users/aurorap/Desktop/folderpath
+scp -r username@dardel-ftn01.pdc.kth.se:/cfs/klemming/home/a/aurorap/folderpath /Users/aurorap/Desktop/folderpath
 
 # Move single file
-scp aurorap@dardel-ftn01.pdc.kth.se:/cfs/klemming/home/a/aurorap/filepath/namefile /Users/aurorap/Desktop/filepath/namefile
+scp username@dardel-ftn01.pdc.kth.se:/cfs/klemming/home/a/aurorap/filepath/namefile /Users/aurorap/Desktop/filepath/namefile
 
 # Move file using VPN
-scp -i ~/.ssh/ed25519_vpn aurorap@dardel-ftn01.pdc.kth.se:/cfs/klemming/home/a/aurorap/filepath/filename /Users/aurorap/Desktop/filepath/filename
+scp -i ~/.ssh/ed25519_vpn username@dardel-ftn01.pdc.kth.se:/cfs/klemming/home/a/aurorap/filepath/filename /Users/aurorap/Desktop/filepath/filename
 ```
 
 ### Local to Server
 ```bash
 # Move folders
-scp -r /Users/aurorap/Desktop/folderpath aurorap@dardel-ftn01.pdc.kth.se:/cfs/klemming/home/a/aurorap/folderpath
+scp -r /Users/aurorap/Desktop/folderpath username@dardel-ftn01.pdc.kth.se:/cfs/klemming/home/a/aurorap/folderpath
 
 # Move single file
-scp /Users/aurorap/Desktop/filepath/namefile aurorap@dardel-ftn01.pdc.kth.se:/cfs/klemming/home/a/aurorap/filepath/namefile
+scp /Users/aurorap/Desktop/filepath/namefile username@dardel-ftn01.pdc.kth.se:/cfs/klemming/home/a/aurorap/filepath/namefile
 
 # Move file using VPN
-scp -i ~/.ssh/ed25519_vpn /Users/aurorap/Desktop/filepath/filename aurorap@dardel-ftn01.pdc.kth.se:/cfs/klemming/home/a/aurorap/filepath/filename
+scp -i ~/.ssh/ed25519_vpn /Users/aurorap/Desktop/filepath/filename username@dardel-ftn01.pdc.kth.se:/cfs/klemming/home/a/aurorap/filepath/filename
 ```
 
-### Get Current Directory Path
-```bash
-pwd
-```
 
 ## Screen Sessions (Other Servers)
 
-Screen allows running code while closing terminal and laptop.
+Screen allows running code while closing terminal and laptop, same as nohup.
 
 ### Basic Screen Commands
 ```bash
 # Enter server
-ssh aurorap@servername
+ssh username@servername.se
 
 # Start screen
 screen
@@ -185,24 +187,7 @@ exit
 jupyter nbconvert --to notebook --inplace --execute mynotebook.ipynb
 ```
 
-## Version Control (GitHub)
-
-Always use GitHub Desktop for GUI operations.
-
-### Terminal Git Commands
-```bash
-# Before modifying anything
-git fetch
-git rebase
-```
-
 ## Python Parallel Processing
-
-### Documentation
-- Main: https://docs.python.org/3/library/multiprocessing.html
-- Tutorial: https://www.kth.se/blogs/pdc/2019/02/parallel-programming-in-python-multiprocessing-part-1/
-- Additional: https://superfastpython.com/multiprocessing-pool-python/
-- Guide: https://medium.com/@mehta.kavisha/different-methods-of-multiprocessing-in-python-70eb4009a990
 
 ### Basic Setup
 ```python
@@ -263,6 +248,12 @@ result = [x for p in multi_result for x in p.get()]
 print(result)
 ```
 
+### Documentation
+- Main: https://docs.python.org/3/library/multiprocessing.html
+- Tutorial: https://www.kth.se/blogs/pdc/2019/02/parallel-programming-in-python-multiprocessing-part-1/
+- Additional: https://superfastpython.com/multiprocessing-pool-python/
+- Guide: https://medium.com/@mehta.kavisha/different-methods-of-multiprocessing-in-python-70eb4009a990
+
 ## Python Code Profiling
 
 Profiling helps identify bottlenecks in code.
@@ -286,7 +277,7 @@ pip install line_profiler
 # In code
 from line_profiler import profile
 
-# Before functions
+# Before functions write
 @line_profiler.profile
 def your_function():
     pass
@@ -296,9 +287,3 @@ def your_function():
 # In terminal
 kernprof -l -v main.py
 ```
-
-## Notes
-- **Synchronous methods**: `map` and `starmap` guarantee correct output order but may have performance issues if workload is unbalanced
-- **Asynchronous methods**: `apply_async` allows better load balancing
-- **VPN limitation**: Mac VPN drops every 24 minutes
-- **Memory allocation**: Be careful with large matrix operations on Dardel
