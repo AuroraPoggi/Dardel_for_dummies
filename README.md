@@ -134,6 +134,8 @@ size depends on allocation and it does not have backup. All the data in a projec
 ```
   size ulimited. All the data in a project directory will be deleted 3 months after the project ends.
 
+  Note: projectname is usually naiss2024-22-projectnumber
+
   
   
 
