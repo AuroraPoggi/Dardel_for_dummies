@@ -97,6 +97,7 @@ scancel <job_id>
 ```
 
 ## Storage Management
+(https://support.pdc.kth.se/doc/data_management/klemming/#storage-areas)
 
 ### Check Available Space
 ```bash
@@ -108,7 +109,35 @@ du -h --max-depth=1 | sort -hr
 
 # Check individual file sizes
 ls -lh
+
+# Check subdirectories of your project sing most space
+du -sh /cfs/klemming/projects/snic/my_proj/* | sort -hr
+
+# Check how much space each member of the project is using
+find /cfs/klemming/projects/snic/my_proj -printf "%s %u\n" | awk '{arr[$2]+=$1} END {for (i in arr) {print arr[i],i}}' | numfmt --to=iec --suffix=B | sort -hr
 ```
+
+### Storage types:
+* HOME: path
+  ```bash
+  /cfs/klemming/home/u/username
+  ```
+  of size 25GB with backup, is the path of the login node. Only username can access the folders, however, the size is limited and data are available at least after 6 months after last allocayion ended.
+* PROJECTS: path
+```bash
+/cfs/klemming/projects/snic/projectname
+``` 
+size depends on allocation and it does not have backup. All the data in a project directory will be deleted 3 months after the project ends.
+* Scratch path 
+```bash
+ /cfs/klemming/scratch/u/username
+```
+  size ulimited. All the data in a project directory will be deleted 3 months after the project ends.
+
+  
+  
+
+
 
 ## Run in Background 
 
