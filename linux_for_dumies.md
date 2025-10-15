@@ -17,4 +17,5 @@ How to move in terminal with linux commands:
 * pwd: display the pathname
 * rm [directory]: remove/delete files or directories
 * tail [file]: displays last n lines of a file
+* vim [file]: displays a file (.out or a text file), to close :q
   
