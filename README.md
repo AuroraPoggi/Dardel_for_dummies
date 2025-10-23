@@ -72,6 +72,17 @@ With this one, you also dont need to have an environment with Torch as is pre in
 singularity exec --rocm -B /cfs/klemming /pdc/software/resources/sing_hub/rocm5.7_ubuntu22.04_py3.10_pytorch_2.0.1 python3 main.py
 ```
 
+Alternative:
+```bash
+singularity shell --rocm -B /cfs/klemming /pdc/software/resources/sing_hub/rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0
+```
+followed by: 
+```bash
+python main.py
+```
+
+In case you need Python packages that are not included in Singularity, like PyTorch Geometric, you first need to create an environment and install them there then you will manage to get it run using cuda. 
+
 ### Environment Activation
 ```bash
 conda activate myenv
