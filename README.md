@@ -82,6 +82,10 @@ python main.py
 ```
 
 In case you need Python packages that are not included in Singularity, like PyTorch Geometric, you first need to create an environment and install them there then you will manage to get it run using cuda. 
+You need to activate the environment then the following: 
+```bash
+singularity exec   -B /cfs/klemming/projects/supr/naiss2025-22-memoryid/env:/env   --env PYTHONPATH=/env/lib/python3.12/site-packages   /pdc/software/resources/sing_hub/rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0   python /cfs/klemming/home/a/aurorap/path_file/main.py
+```
 
 ### Environment Activation
 ```bash
