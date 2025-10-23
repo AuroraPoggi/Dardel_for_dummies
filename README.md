@@ -67,12 +67,12 @@ module load PDCOLD/23.12
 module load singularity/4.1.1-cpeGNU-23.12
 ```
 If you load singularity, then you should run with (whatever this means) 
-With this one, you also dont need to have an environment with Torch as is pre installed in the singularity. 
+With this one, you also dont need to have an environment with Torch as is pre installed in the singularity and it directly execute the Python script. 
 ```bash
 singularity exec --rocm -B /cfs/klemming /pdc/software/resources/sing_hub/rocm5.7_ubuntu22.04_py3.10_pytorch_2.0.1 python3 main.py
 ```
 
-Alternative:
+Alternative, first you open singularity using shell then run the Python script:
 ```bash
 singularity shell --rocm -B /cfs/klemming /pdc/software/resources/sing_hub/rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0
 ```
@@ -81,11 +81,55 @@ followed by:
 python main.py
 ```
 
-In case you need Python packages that are not included in Singularity, like PyTorch Geometric, you first need to create an environment and install them there then you will manage to get it run using cuda. 
-You need to activate the environment then the following: 
+In case you need Python packages that are not included in Singularity, like PyTorch Geometric, you first need to create an environment and install them.
+You need to do the following steps: 
+* In python script path: 
 ```bash
-singularity exec   -B /cfs/klemming/projects/supr/naiss2025-22-memoryid/env:/env   --env PYTHONPATH=/env/lib/python3.12/site-packages   /pdc/software/resources/sing_hub/rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0   python /cfs/klemming/home/a/aurorap/path_file/main.py
+singularity shell   -B /cfs/klemming/projects/supr/naiss2025-22-memoryid/env:/env   --env PYTHONPATH=/env/lib/python3.12/site-packages   /pdc/software/resources/sing_hub/rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0 
 ```
+* Inside singularity
+```bash
+PYTHONPATH=/ca2env/lib/python3.12/site-packages:$PYTHONPATH
+```
+* Then run python script:
+```bash
+python main.py 
+```
+
+In case you have some data that are in another folder, for example in project memory, then you do:
+* 
+```bash
+singularity shell -B /cfs/klemming/projects/supr/naiss2025-22-memoryid:/cfs/klemming/projects/pathtodatafolder \
+  /pdc/software/resources/sing_hub/rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0
+```
+* Then run python script:
+```bash
+python main.py 
+```
+
+In case you have both data and python packages needed in another environment (Note: BE CAREFUL the ebvironment does not have to contain torch (if you are in torch singularity otherwise it will lead to problems) then yiu follow these steps:
+* In terminal, at location where python script is:
+```bash
+singularity shell \
+  -B /cfs/klemming/projects/supr/naiss2025-22-memoryid/env:/env \ #modify with your right piath
+  -B /cfs/klemming/projects/supr/naiss2025-22-memoryid:/cfs/klemming/projects/pathtodatafolder \
+  /pdc/software/resources/sing_hub/rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0
+```
+* Inside the Singularity, (so you will read...
+  
+```bash
+>Singularity
+```
+)
+  then you do, to import the libraries not in that container: 
+```bash
+PYTHONPATH=/ca2env/lib/python3.12/site-packages:$PYTHONPATH
+```
+* Run python script:
+```bash
+python main.py
+```
+
 
 ### Environment Activation
 ```bash
