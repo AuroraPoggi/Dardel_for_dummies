@@ -115,6 +115,18 @@ du -sh /cfs/klemming/projects/snic/my_proj/* | sort -hr
 
 # Check how much space each member of the project is using
 find /cfs/klemming/projects/snic/my_proj -printf "%s %u\n" | awk '{arr[$2]+=$1} END {for (i in arr) {print arr[i],i}}' | numfmt --to=iec --suffix=B | sort -hr
+
+
+# Sometimes you get error disk quita axceeded but instead is the inodes, to check:
+df -i /cfs/klemming/home/a/username || df -i .
+
+# check with directories take most nodes:
+find /cfs/klemming/home/a/username -xdev -type f -printf '%h\n' \
+  | sort | uniq -c | sort -nr | head -n 50
+
+# to free up, is safe (as long as i understood right)
+python3 -m pip cache purge
+
 ```
 
 ### Storage types:
