@@ -53,6 +53,38 @@ salloc -A naiss2024-22-projectnumber -p main --nodes=1 --time=02:00:00
 salloc -A naiss2024-22-projectnumber -p gpu --nodes=1 --gpus=1 --time=02:00:00
 ```
 
+Otherwise, you can also write a sbatch script with the following:
+```bash
+#!/bin/bash -l
+#SBATCH -A naiss2025-22-projectnumber
+#SBATCH -J namejob
+#SBATCH -t 02:00:00
+#SBATCH --partition=main
+#SBATCH --open-mode=append
+#SBATCH -e name_error.e
+#SBATCH -o name_output.o
+
+srun bash bashname.sh
+```
+If you want to do for gpu:
+```bash
+#!/bin/bash -l
+#SBATCH -A naiss2025-22-projectnumber
+#SBATCH -J namejob
+#SBATCH -p gpu
+#SBATCH -t 02:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH -e name_error.e
+#SBATCH -o name_output.o
+
+# activate your env
+ml PDCOLD/23.12
+ml singularity/4.1.1-cpeGNU-23.12
+
+singularity exec --rocm -B /cfs/klemming /pdc/software/resources/sing_hub/rocm5.7_ubuntu22.04_py3.10_pytorch_2.0.1 python3 main.py
+```
+
 ### Starting Interactive Session
 ```bash
 # Once allocation is granted
@@ -265,6 +297,36 @@ scp /Users/aurorap/Desktop/filepath/namefile username@dardel-ftn01.pdc.kth.se:/c
 # Move file using VPN
 scp -i ~/.ssh/ed25519_vpn /Users/aurorap/Desktop/filepath/filename username@dardel-ftn01.pdc.kth.se:/cfs/klemming/home/a/aurorap/filepath/filename
 ```
+
+## Weights and Biases
+Is AI developer platform to train and fine-tune models, you can see while running loss plot, logs file and gpu status. 
+* Sign up: https://wandb.ai/site/
+* Enter your KTH email to get more space and projects
+* Inside your script of a NN you will write the following:
+```bash
+# All your imports
+
+import wandb
+from datetime import datetime
+
+# Once all the imports are specified
+wandb.login()
+wand.init(project="projectname", name"name_each_run"+ datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+        #entity="aurorap-kth-royal-institute-of-technology-org"
+    )
+
+# If you have a config
+wandb.config.update(config)
+
+# Here you insert all your code, model, train, test
+wand.log({'train loss': train_loss}, step=epoch) # or other things you want to save
+
+# End of script
+wandb.finish()
+```
+
+  
+
 
 
 ## Screen Sessions (Other Servers)
