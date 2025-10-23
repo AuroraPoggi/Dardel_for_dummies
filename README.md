@@ -67,6 +67,7 @@ module load PDCOLD/23.12
 module load singularity/4.1.1-cpeGNU-23.12
 ```
 If you load singularity, then you should run with (whatever this means) 
+With this one, you also dont need to have an environment with Torch as is pre installed in the singularity. 
 ```bash
 singularity exec --rocm -B /cfs/klemming /pdc/software/resources/sing_hub/rocm5.7_ubuntu22.04_py3.10_pytorch_2.0.1 python3 main.py
 ```
@@ -120,11 +121,11 @@ find /cfs/klemming/projects/snic/my_proj -printf "%s %u\n" | awk '{arr[$2]+=$1} 
 # Sometimes you get error disk quita axceeded but instead is the inodes, to check:
 df -i /cfs/klemming/home/a/username || df -i .
 
-# check with directories take most nodes:
+# Check which directories take most inodes:
 find /cfs/klemming/home/a/username -xdev -type f -printf '%h\n' \
   | sort | uniq -c | sort -nr | head -n 50
 
-# to free up, is safe (as long as i understood right)
+# To free up, is safe (as long as I  understood right)
 python3 -m pip cache purge
 
 ```
