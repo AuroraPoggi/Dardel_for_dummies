@@ -53,7 +53,7 @@ salloc -A naiss2024-22-projectnumber -p main --nodes=1 --time=02:00:00
 salloc -A naiss2024-22-projectnumber -p gpu --nodes=1 --gpus=1 --time=02:00:00
 ```
 
-Otherwise, you can also write a sbatch script with the following:
+Otherwise, you can also write a sbatch script as:
 ```bash
 #!/bin/bash -l
 #SBATCH -A naiss2025-22-projectnumber
@@ -66,7 +66,7 @@ Otherwise, you can also write a sbatch script with the following:
 
 srun bash bashname.sh
 ```
-If you want to do for gpu:
+If you want to do it for gpu:
 ```bash
 #!/bin/bash -l
 #SBATCH -A naiss2025-22-projectnumber
@@ -78,11 +78,13 @@ If you want to do for gpu:
 #SBATCH -e name_error.e
 #SBATCH -o name_output.o
 
-# activate your env
+# Activate your env
+
 ml PDCOLD/23.12
 ml singularity/4.1.1-cpeGNU-23.12
 
-singularity exec --rocm -B /cfs/klemming /pdc/software/resources/sing_hub/rocm5.7_ubuntu22.04_py3.10_pytorch_2.0.1 python3 main.py
+# Singularity specification, exec or shell
+singularity ...
 ```
 
 ### Starting Interactive Session
@@ -98,17 +100,17 @@ srun --pty bash
 module load PDCOLD/23.12
 module load singularity/4.1.1-cpeGNU-23.12
 ```
-If you load singularity, then you should run with (whatever this means) 
-With this one, you also dont need to have an environment with Torch as is pre installed in the singularity and it directly execute the Python script. 
+If you load singularity(has PyTorch), then you should run first:
 ```bash
 singularity exec --rocm -B /cfs/klemming /pdc/software/resources/sing_hub/rocm5.7_ubuntu22.04_py3.10_pytorch_2.0.1 python3 main.py
 ```
+Note: with this one, you also dont need to have an environment with Torch as is pre installed in the singularity and it directly execute the Python script (exec command). 
 
 Alternative, first you open singularity using shell then run the Python script:
 ```bash
 singularity shell --rocm -B /cfs/klemming /pdc/software/resources/sing_hub/rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0
 ```
-followed by: 
+followed by, inside the sigularity: 
 ```bash
 python main.py
 ```
@@ -153,7 +155,7 @@ singularity shell \
 >Singularity
 ```
 )
-  then you do, to import the libraries not in that container: 
+  then you do the following (to import the libraries not in that container): 
 ```bash
 PYTHONPATH=/ca2env/lib/python3.12/site-packages:$PYTHONPATH
 ```
