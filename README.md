@@ -44,7 +44,8 @@ ssh -i ~/.ssh/keyname username@servername.se
 
 ## Running Code on Dardel PDC
 
-### Resource Allocation
+### Resource Allocation 
+the following is to run on a full node, see node type at (https://support.pdc.kth.se/doc/run_jobs/job_scheduling/#how-jobs-are-scheduled) under Dardel compute nodes. 
 ```bash
 # Standard allocation 
 salloc -A naiss2024-22-projectnumber -p main --nodes=1 --time=02:00:00
@@ -85,6 +86,23 @@ ml singularity/4.1.1-cpeGNU-23.12
 
 # Singularity specification, exec or shell
 singularity ...
+```
+
+In case you want to run CPU but dont plan to use all the nodes, then you can use the shared nodes (thin node):
+```bash
+#!/bin/bash -l
+#SBATCH -A naiss2025-22-projectnumber
+#SBATCH -J namejob
+#SBATCH -t 02:00:00
+#SBATCH -p shared
+#SBATCH --ntasks=2
+#SBATCH --cpus-per-task=2
+#SBATCH --mem=40G
+#SBATCH --open-mode=append
+#SBATCH -e name_error.e
+#SBATCH -o name_output.o
+
+srun bash bashname.sh
 ```
 
 ### Starting Interactive Session
