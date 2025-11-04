@@ -202,6 +202,12 @@ squeue -u $USER
 
 # Show detailed information about a specific job
 scontrol show job <job_id>
+sstat --jobs=<job_id>
+
+# Show detailed information about a specific PAST job
+sacct --jobs=<job_id>
+# or to get run executed before midnight of current day
+sacct --starttime=YYYY-MM-DD
 ```
 ### Cancel a running or pending job
 ```bash
