@@ -204,6 +204,9 @@ squeue -u $USER
 scontrol show job <job_id>
 sstat --jobs=<job_id>
 
+# Show all details
+squeue -u $USER -h -o "%18i %.200j %.2t %.10M %.6D %R"
+
 # Show detailed information about a specific PAST job
 sacct --jobs=<job_id>
 # or to get run executed before midnight of current day
