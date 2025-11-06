@@ -159,7 +159,7 @@ singularity shell -B /cfs/klemming/projects/supr/naiss2025-22-memoryid:/cfs/klem
 python main.py 
 ```
 
-In case you have both data and python packages needed in another environment (Note: BE CAREFUL the ebvironment does not have to contain torch (if you are in torch singularity otherwise it will lead to problems) then yiu follow these steps:
+In case you have both data and python packages needed in another environment (Note: BE CAREFUL the environment does not have to contain torch (if you are in torch singularity otherwise it will lead to problems) then you follow these steps:
 * In terminal, at location where python script is:
 ```bash
 singularity shell \
