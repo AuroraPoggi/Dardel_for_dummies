@@ -1,6 +1,12 @@
 # Dardel for dummies
 How to use Dardel PDC at KTH and other tools for programming.
 
+## Create a project 
+1. Check on https://supr.naiss.se/resource/ which resourcer are available. Note: If you are a PhD student you can only ask for NAISS Small Compute. 
+2. Go to https://supr.naiss.se/ and access using your KTH account. 
+3. Click on the chosen compute and on "Create New Proposal for NAISS Compute ...". 
+4. Fill in all the required boxes. 
+
 ## SSH Setup and Access
 
 ### Creating SSH Keys
@@ -39,7 +45,7 @@ Host nameplace
 
 ### Access with VPN
 ```bash
-ssh -i ~/.ssh/keyname username@servername.se
+ssh -i ~/.ssh/keynameVPN username@servername.se
 ```
 
 ## Running Code on Dardel PDC
@@ -48,10 +54,10 @@ ssh -i ~/.ssh/keyname username@servername.se
 the following is to run on a full node, see node type at (https://support.pdc.kth.se/doc/run_jobs/job_scheduling/#how-jobs-are-scheduled) under Dardel compute nodes. 
 ```bash
 # Standard allocation 
-salloc -A naiss2024-22-projectnumber -p main --nodes=1 --time=02:00:00
+salloc -A naiss2025-22-projectnumber -p main --nodes=1 --time=02:00:00
 
 # GPU allocation
-salloc -A naiss2024-22-projectnumber -p gpu --nodes=1 --gpus=1 --time=02:00:00
+salloc -A naiss2025-22-projectnumber -p gpu --nodes=1 --gpus=1 --time=02:00:00
 ```
 
 Otherwise, you can also write a sbatch script as:
@@ -175,7 +181,7 @@ singularity shell \
 )
   then you do the following (to import the libraries not in that container): 
 ```bash
-PYTHONPATH=/ca2env/lib/python3.12/site-packages:$PYTHONPATH
+PYTHONPATH=/myenv/lib/python3.12/site-packages:$PYTHONPATH
 ```
 * Run python script:
 ```bash
@@ -195,7 +201,7 @@ python main.py
 bash test.sh
 ```
 
-### Checking a job status
+## Checking a job status
 ```bash
 # Check all your jobs in the queue
 squeue -u $USER
@@ -242,10 +248,10 @@ find /cfs/klemming/projects/snic/my_proj -printf "%s %u\n" | awk '{arr[$2]+=$1} 
 
 
 # Sometimes you get error disk quita axceeded but instead is the inodes, to check:
-df -i /cfs/klemming/home/a/username || df -i .
+df -i /cfs/klemming/home/u/username || df -i .
 
 # Check which directories take most inodes:
-find /cfs/klemming/home/a/username -xdev -type f -printf '%h\n' \
+find /cfs/klemming/home/u/username -xdev -type f -printf '%h\n' \
   | sort | uniq -c | sort -nr | head -n 50
 
 # To free up, is safe (as long as I  understood right)
@@ -270,234 +276,34 @@ size depends on allocation and it does not have backup. All the data in a projec
 ```
   size ulimited. All the data in a project directory will be deleted 3 months after the project ends.
 
-  Note: projectname is usually naiss2024-22-projectnumber
+  Note: projectname is usually naiss2025-22-projectnumber
 
-  
-  
-
-
-
-## Run in Background 
-
-### Basic Bash Script Template
-```bash
-#!/bin/bash
-```
-
-### Running with nohup
-```bash
-# Run Python script in background
-nohup python3 -u main.py >nohup_main.out &
-
-# Check output
-tail -f nohup_name.out
-```
-
-### Loop Through Variables
-```bash
-list=(1 2 3)
-t=2
-for k in "${list[@]}"
-do
-    file_path="nome_${k}_.npy"
-    python3 main.py $k $t
-done
-```
 
 ## File Transfer
 Using the right node to move big files (dardel-ftn01.pdc.kth.se). 
 ### Server to Local
 ```bash
 # Move folders
-scp -r username@dardel-ftn01.pdc.kth.se:/cfs/klemming/home/a/aurorap/folderpath /Users/aurorap/Desktop/folderpath
+scp -r username@dardel-ftn01.pdc.kth.se:/cfs/klemming/home/u/username/folderpath /Users/username/folderpath
 
 # Move single file
-scp username@dardel-ftn01.pdc.kth.se:/cfs/klemming/home/a/aurorap/filepath/namefile /Users/aurorap/Desktop/filepath/namefile
+scp username@dardel-ftn01.pdc.kth.se:/cfs/klemming/home/u/username/filepath/namefile /Users/username/filepath/namefile
 
 # Move file using VPN
-scp -i ~/.ssh/ed25519_vpn username@dardel-ftn01.pdc.kth.se:/cfs/klemming/home/a/aurorap/filepath/filename /Users/aurorap/Desktop/filepath/filename
+scp -i ~/.ssh/keynameVPN username@dardel-ftn01.pdc.kth.se:/cfs/klemming/home/u/username/filepath/filename /Users/username/filepath/filename
 ```
 
 ### Local to Server
 ```bash
 # Move folders
-scp -r /Users/aurorap/Desktop/folderpath username@dardel-ftn01.pdc.kth.se:/cfs/klemming/home/a/aurorap/folderpath
+scp -r /Users/username/folderpath username@dardel-ftn01.pdc.kth.se:/cfs/klemming/home/u/username/folderpath
 
 # Move single file
-scp /Users/aurorap/Desktop/filepath/namefile username@dardel-ftn01.pdc.kth.se:/cfs/klemming/home/a/aurorap/filepath/namefile
+scp /Users/username/filepath/namefile username@dardel-ftn01.pdc.kth.se:/cfs/klemming/home/u/username/filepath/namefile
 
 # Move file using VPN
-scp -i ~/.ssh/ed25519_vpn /Users/aurorap/Desktop/filepath/filename username@dardel-ftn01.pdc.kth.se:/cfs/klemming/home/a/aurorap/filepath/filename
+scp -i ~/.ssh/keynameVPN /Users/username/filepath/filename username@dardel-ftn01.pdc.kth.se:/cfs/klemming/home/u/username/filepath/filename
 ```
 
-## Weights and Biases
-Is AI developer platform to train and fine-tune models, you can see while running loss plot, logs file and gpu status. 
-* Sign up: https://wandb.ai/site/
-* Enter your KTH email to get more space and projects
-* Inside your script of a NN you will write the following:
-```bash
-# All your imports
-
-import wandb
-from datetime import datetime
-
-# Once all the imports are specified
-wandb.login()
-wand.init(project="projectname", name"name_each_run"+ datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
-        #entity="aurorap-kth-royal-institute-of-technology-org"
-    )
-
-# If you have a config
-wandb.config.update(config)
-
-# Here you insert all your code, model, train, test
-wand.log({'train loss': train_loss}, step=epoch) # or other things you want to save
-
-# End of script
-wandb.finish()
-```
-
-  
 
 
-
-## Screen Sessions (Other Servers)
-
-Screen allows running code while closing terminal and laptop, same as nohup.
-
-### Basic Screen Commands
-```bash
-# Enter server
-ssh username@servername.se
-
-# Start screen
-screen
-
-# Start Python
-python namefile.py
-
-# Exit screen (detach)
-# Press: Ctrl+A then D
-
-# Return to screen
-screen -r IDscreen
-
-# Check running screens
-screen -ls
-
-# Force detach if attached
-screen -d -r IDscreen
-
-# Quit screen
-# Press: Ctrl+A then type :quit
-
-# Exit server
-exit
-```
-
-### Jupyter Notebook Execution
-```bash
-# Run all Jupyter cells (doesn't always work)
-jupyter nbconvert --to notebook --inplace --execute mynotebook.ipynb
-```
-
-## Python Parallel Processing
-
-### Basic Setup
-```python
-import multiprocessing as mp
-
-# Detect CPU cores
-nprocs = mp.cpu_count()
-print(f"Number of CPU cores: {nprocs}")
-
-# Create pool
-pool = mp.Pool(processes=nprocs)
-```
-
-### Simple Function (Single Input)
-```python
-def square(x):
-    return x*x
-
-# In main
-result = pool.map(square, range(20))
-print(result)
-```
-
-### Complex Function (Multiple Inputs)
-```python
-def power_n(x, n):
-    return x**n
-
-# In main
-result = pool.starmap(power_n, [(x, 2) for x in range(20)])
-print(result)
-```
-
-### Asynchronous Processing
-```python
-def power_n_list(x_list, n):
-    return [x ** n for x in x_list]
-
-def slice_data(data, nprocs):
-    aver, res = divmod(len(data), nprocs)
-    nums = []
-    for proc in range(nprocs):
-        if proc < res:
-            nums.append(aver + 1)
-        else:
-            nums.append(aver)
-    count = 0
-    slices = []
-    for proc in range(nprocs):
-        slices.append(data[count: count+nums[proc]])
-        count += nums[proc]
-    return slices
-
-# In main
-inp_lists = slice_data(range(20), nprocs)
-multi_result = [pool.apply_async(power_n_list, (inp, 2)) for inp in inp_lists]
-result = [x for p in multi_result for x in p.get()]
-print(result)
-```
-
-### Documentation
-- Main: https://docs.python.org/3/library/multiprocessing.html
-- Tutorial: https://www.kth.se/blogs/pdc/2019/02/parallel-programming-in-python-multiprocessing-part-1/
-- Additional: https://superfastpython.com/multiprocessing-pool-python/
-- Guide: https://medium.com/@mehta.kavisha/different-methods-of-multiprocessing-in-python-70eb4009a990
-
-## Python Code Profiling
-
-Profiling helps identify bottlenecks in code.
-
-### Full Script Profiling
-```bash
-# Install cProfile
-pip install cProfile
-
-# Analyze entire script
-python -m cProfile main.py
-```
-
-### Line-by-Line Profiling
-```bash
-# Install line profiler
-pip install line_profiler
-```
-
-```python
-# In code
-from line_profiler import profile
-
-# Before functions write
-@line_profiler.profile
-def your_function():
-    pass
-```
-
-```bash
-# In terminal
-kernprof -l -v main.py
-```
