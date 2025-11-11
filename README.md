@@ -1,5 +1,13 @@
 # Dardel for dummies
-How to use Dardel PDC at KTH and other tools for programming.
+This is a Guide for KTH employees who use the PDC Center's Dardel high-performance computing resources.
+
+## DISCLAIMER:
+🤯 Necessary disclaimer, this guide was created by PhD students in mathematics with little knowledge on HPC systems and basic programming skills. 
+With this guide, we mainly hope to achieve the following:
+* Share our knowledge & experiences with Dardel and, hopefuly, save you valuable time that you can spend on what you love 🫂.
+* Help other KTH researchers who are struggling to set up the environment to run their codes faster and in an optimal way.
+* Generate constructive discussion that benefits everyone 💬.
+* Any comment and suggestions are more than welcome, the ultimate goal is to help each other 🤝. 
 
 ## Create a project 
 1. Check on https://supr.naiss.se/resource/ which resourcer are available. Note: If you are a PhD student you can only ask for NAISS Small Compute. 
