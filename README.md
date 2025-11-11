@@ -2,7 +2,7 @@
 This is a Guide for KTH employees who use the PDC Center's Dardel high-performance computing resources.
 
 ## DISCLAIMER:
-🤯 Necessary disclaimer, this guide was created by PhD students in mathematics with little knowledge on HPC systems and basic programming skills. 
+🚨🚨 Necessary disclaimer, this guide was created by PhD students in mathematics with little knowledge on HPC systems and basic programming skills. 
 With this guide, we mainly hope to achieve the following:
 * Share our knowledge & experiences with Dardel and, hopefuly, save you valuable time that you can spend on what you love 🫂.
 * Help other KTH researchers who are struggling to set up the environment to run their codes faster and in an optimal way.
