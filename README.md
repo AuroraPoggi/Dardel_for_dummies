@@ -254,7 +254,7 @@ df -i /cfs/klemming/home/u/username || df -i .
 find /cfs/klemming/home/u/username -xdev -type f -printf '%h\n' \
   | sort | uniq -c | sort -nr | head -n 50
 
-# To free up, is safe (as long as I  understood right)
+# To free up, is safe to do (pip will re-download all packages)
 python3 -m pip cache purge
 
 ```
