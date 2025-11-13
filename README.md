@@ -313,5 +313,19 @@ scp /Users/username/filepath/namefile username@dardel-ftn01.pdc.kth.se:/cfs/klem
 scp -i ~/.ssh/keynameVPN /Users/username/filepath/filename username@dardel-ftn01.pdc.kth.se:/cfs/klemming/home/u/username/filepath/filename
 ```
 
+# Alvis for Dummies
+Similar to Dardel except that you have to request an account from SUPR portal and when you enter via ssh:
+```bash
+ssh username@alvis1.c3se.chalmers.se
+```
+it will ask you a password. 
+
+# Run a sbatch script:
+simply add 
+```bash
+#SBATCH -A naiss2024-22-id - p alvis
+```
+
+Alvis is well documented and has a good guide: https://www.c3se.chalmers.se/documentation/first_time_users/intro-alvis/slides/ . 
 
 
