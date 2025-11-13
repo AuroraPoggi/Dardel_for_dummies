@@ -326,6 +326,6 @@ simply add
 #SBATCH -A naiss2024-22-id - p alvis
 ```
 
-Alvis is well documented and has a good guide: https://www.c3se.chalmers.se/documentation/first_time_users/intro-alvis/slides/ . 
+Alvis is well documented and has a good guide: https://www.c3se.chalmers.se/documentation/first_time_users/intro-alvis/slides/ . Also very easy and user friendly to see files and available space from website https://alvis.c3se.chalmers.se/pun/sys/dashboard/files/fs//cephyr/users/username/Alvis .
 
 
