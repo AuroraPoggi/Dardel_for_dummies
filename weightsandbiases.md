@@ -24,3 +24,5 @@ wand.log({'train loss': train_loss}, step=epoch) # or other things you want to s
 # End of script
 wandb.finish()
 ```
+
+You can also create a sweep to perform hyperparameter search, follow guide: https://docs.wandb.ai/models/tutorials/sweeps 
