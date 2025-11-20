@@ -17,7 +17,10 @@ With this guide, we mainly hope to achieve the following:
 
 ## SSH Setup and Access
 
-### Creating SSH Keys
+### Creating SSH Keys: 
+accepted ed24419 and rsa 
+#### On **macOS**
+In the terminal:
 ```bash
 # Create an SSH key
 ssh-keygen -t ed25519
@@ -25,6 +28,12 @@ ssh-keygen -t ed25519
 # Display public key to add to PDC portal
 cat ~/.ssh/id_rsa.pub
 ```
+#### On **Linux**
+In the terminal use the macOS instructions, except for ssh directory that will be under */home* directory and not User. 
+
+#### On **Windows**
+Follow guide to configure SSH key: https://support.pdc.kth.se/doc/login/windows_login/#install-and-configure-kerberos-and-ssh-for-windows. 
+
 
 ### PDC Portal Setup
 1. Go to https://loginportal.pdc.kth.se
@@ -33,10 +42,20 @@ cat ~/.ssh/id_rsa.pub
 4. Modify the key name with what you prefer and extend to all IP addresses
 
 ### To access Dardel through terminal:
+#### On **macOS**
 ```bash
-# Run 
 ssh usernamename@servername.se
 ```
+#### On **Linux**
+```bash
+pdc-ssh <cluster>.pdc.kth.se
+```
+
+#### On **Windows**
+```bash
+kinit -f username@NADA.KTH.SE
+```
+
 
 ### VSCode SSH Configuration
 1. Click on `><` in bottom left corner
