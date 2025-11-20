@@ -11,7 +11,7 @@ How to move in terminal with linux commands:
 * df [opts]: display used and available disk space
 * du [opts]: display how much space each file takes up
 * find pathname/text: search for files matching a provided pattern
-* ls [opts]: list directory contents
+* ls [opts]: list directory contents, if you want to look for files with in their name "blabla" then do ls *blabla*
 * mkdir [opts] directory: create new directory
 * mv [opts] source destinations: rename or move file or directories
 * pwd: display the pathname
