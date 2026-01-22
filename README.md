@@ -138,6 +138,46 @@ In case you want to run CPU but dont plan to use all the nodes, then you can use
 srun bash bashname.sh
 ```
 
+If you want to get emails regarding a job that started or finished add:
+```bash
+#!/bin/bash -l
+#SBATCH -A naiss2025-22-projectnumber
+#SBATCH -J namejob
+#SBATCH -t 02:00:00
+#SBATCH -p shared
+#SBATCH --ntasks=2
+#SBATCH --cpus-per-task=2
+#SBATCH --mem=40G
+#SBATCH --open-mode=append
+#SBATCH -e name_error.e
+#SBATCH -o name_output.o
+#SBATCH --mail-user=auroraslurm@outlook.com
+#SBATCH --mail-type=ALL
+
+srun bash bashname.sh
+```
+
+In case you need a counter variable then you can do the following: 
+```bash
+#!/bin/bash -l
+#SBATCH -A naiss2025-22-projectnumber
+#SBATCH -J namejob
+#SBATCH -t 02:00:00
+#SBATCH -p shared
+#SBATCH --ntasks=2
+#SBATCH --cpus-per-task=2
+#SBATCH --mem=40G
+#SBATCH --open-mode=append
+#SBATCH -e name_error_%a.e
+#SBATCH -o name_output_%a.o
+#SBATCH --array=0-3
+
+count_var=${SLURM_ARRAY_TASK_ID} 
+
+srun bash bashname.sh
+```
+
+
 ### Starting Interactive Session
 ```bash
 # Once allocation is granted
