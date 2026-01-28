@@ -87,14 +87,6 @@ salloc -A naiss2025-22-projectnumber -p main --nodes=1 --time=02:00:00
 salloc -A naiss2025-22-projectnumber -p gpu --nodes=1 --gpus=1 --time=02:00:00
 ```
 
-Once you get a node do:
-```bash
-# Standard allocation 
-srun --pty bash 
-
-# GPU allocation
-srun --pty bash  module load PDCOLD/23.12 module load singularity/4.1.1-cpeGNU-23.12 
-```
 
 Otherwise, you can also write a sbatch script as:
 ```bash
