@@ -26,7 +26,7 @@ In the terminal:
 ssh-keygen -t ed25519
 
 # Display public key to add to PDC portal
-cat ~/.ssh/id_rsa.pub
+cat ~/.ssh/name_key.pub
 ```
 #### On **Linux**
 In the terminal use the macOS instructions, except for ssh directory that will be under */home* directory and not User. 
