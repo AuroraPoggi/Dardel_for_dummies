@@ -342,8 +342,7 @@ size depends on allocation and it does not have backup. All the data in a projec
 ```bash
  /cfs/klemming/scratch/u/username
 ```
-  size ulimited. All the data in a project directory will be deleted 3 months after the project ends.
-
+  size unlimited. The scratch area is automatically cleaned by removing files that have not been changed in 30 days. Good to send output and error files from sbatch scripts here. 
   Note: projectname is usually naiss2025-22-projectnumber
 
 
