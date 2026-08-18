@@ -61,7 +61,6 @@ This is the single biggest thing to get right early — most early errors on a f
 | Project storage | `/nobackup/proj/disk/PROJECTNAME/personal/username/` | Where you should put containers, datasets, output, and pip caches. `PROJECTNAME` is your `naiss20XX-XX-XXXXX` allocation id. |
 | Migrated Tetralith data | `/nobackup/proj/disk/PROJECTNAME/from-tetralith/` | If your project's data was auto-migrated from Tetralith, look here before assuming it's missing. |
 
-**There is no `/pdc` or `/cfs/klemming` on Arrhenius.** Those are Dardel/PDC paths. If you're porting a script from Dardel, every hardcoded `/cfs/klemming/...` path needs to become a `/nobackup/proj/disk/...` path, and every `/pdc/software/resources/sing_hub/...` container path needs to be replaced with your own pulled container (see below) — the Dardel container hub doesn't exist here.
 
 ### Checking space
 
@@ -89,7 +88,7 @@ interactive -A naiss20XX-X-XXXX -p main --nodes=1 --time=02:00:00
 interactive -A naiss20XX-X-XXXX-gpu -p gpu -N 1 --gpus-per-node=1 -t 02:00:00
 ```
 
-A common mistake: submitting to `-p gpu` **without** `--gpus-per-node` (or `--gres=gpu:N`) gives you a job on the GPU partition with zero GPUs allocated. Always request GPUs explicitly.
+A common mistake: submitting to `-p gpu` **without** `--gpus-per-node` (or `--gres=gpu:N`) gives you a job on the GPU partition with four GPUs allocated. Always request GPUs explicitly.
 
 ### Sbatch template — CPU
 
@@ -117,7 +116,6 @@ cd /nobackup/proj/disk/PROJECTNAME/personal/username/myproject
 python3 -u main.py
 ```
 
-Make sure the log directory exists **before** Slurm tries to write to it (`mkdir -p` at the top, or the job silently fails to produce logs). Also double check the `-A` account matches the allocation you actually intend to bill — it's easy to copy an old sbatch file and forget to update it.
 
 ### CPU environment: Miniforge + pip
 
